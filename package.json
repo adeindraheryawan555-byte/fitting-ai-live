@@ -1,0 +1,1 @@
+{"name":"fitting-ai-live","version":"0.2.0","private":true,"scripts":{"start":"node --env-file=.env server.js"},"engines":{"node":">=20"}}
