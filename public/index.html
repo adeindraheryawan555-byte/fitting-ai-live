@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FITTING AI LIVE</title>
+<style>
+:root{--bg:#f4f4f5;--card:#fff;--tx:#18181b;--mu:#71717a;--ac:#e11d48;--bd:#e4e4e7;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#111113;--card:#1c1c20;--tx:#f4f4f5;--mu:#a1a1aa;--bd:#2e2e34}}
+*{box-sizing:border-box}html{height:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+header b{letter-spacing:.06em}header small{color:var(--mu);display:block;font-size:11px}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:8px 12px}
+button.p{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+button:disabled{opacity:.45;cursor:not-allowed}
+.pill{font-size:12px;padding:4px 10px;border-radius:99px;background:var(--bd)}
+main{display:grid;grid-template-columns:1fr;gap:16px;padding:16px;max-width:1200px;margin:auto}
+.cam{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:auto;position:fixed;right:20px;top:72px;width:380px;z-index:20;max-height:calc(100vh - 90px);box-shadow:0 12px 40px #0004}.cam.min>:not(h2){display:none}#ar{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}#drag{cursor:grab;touch-action:none;user-select:none;display:flex;justify-content:center;align-items:center;gap:8px}#drag:active{cursor:grabbing}#drag button{padding:0 8px;line-height:1.4}@media(min-width:761px){main>section:last-child{margin-right:400px}}
+.cam h2{margin:0;padding:8px;text-align:center;font-size:12px;color:var(--mu);font-weight:500;border-bottom:1px solid var(--bd)}
+.view{position:relative;aspect-ratio:3/4;background:#0b0b0d;display:grid;place-items:center;color:#fff}
+video,.view img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+video.mir{transform:scaleX(-1)}
+.sil{position:absolute;inset:0;display:none;pointer-events:none;opacity:.55}
+.sil.on{display:block}
+.msg{position:relative;text-align:center;padding:16px;font-size:13px;max-width:280px}
+.tag{position:absolute;top:8px;left:8px;z-index:2;font-size:11px;background:#0009;padding:3px 8px;border-radius:99px;color:#fff}
+.bar{display:flex;gap:6px;flex-wrap:wrap;padding:10px}
+.res{display:none;grid-template-columns:1fr 1fr;gap:6px;padding:0 10px 10px}
+.res.on{display:grid}.res figure{margin:0;font-size:11px;color:var(--mu);text-align:center}.res img,.res svg{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;background:var(--bg)}
+.note{margin:0 10px 10px;padding:8px 10px;border-radius:8px;background:var(--bg);font-size:12px;color:var(--mu)}
+.quota{display:flex;justify-content:space-between;padding:8px 10px;border-top:1px solid var(--bd);font-size:12px}
+.tools{display:flex;gap:8px;margin-bottom:12px}.tools input,.tools select{flex:1;padding:9px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.item{background:var(--card);border:2px solid var(--bd);border-radius:12px;padding:8px;text-align:left;display:block;width:100%}
+.item.sel{border-color:var(--ac)}.item svg{width:100%;aspect-ratio:1;background:var(--bg);border-radius:8px}
+.item b{display:block;font-size:13px;margin-top:6px}.item span{color:var(--mu);font-size:12px}
+.demo{font-size:10px;color:var(--ac);font-weight:700}
+.detail{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:12px}
+.detail h3{margin:0 0 4px}.row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.sw{width:26px;height:26px;border-radius:50%;padding:0;border:2px solid var(--bd)}.sw.sel{outline:2px solid var(--ac);outline-offset:2px}
+.sz.sel{border-color:var(--ac);color:var(--ac)}
+dialog{border:1px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);max-width:520px;width:calc(100% - 32px)}
+dialog::backdrop{background:#0008}table{width:100%;border-collapse:collapse}td,th{padding:6px;border-bottom:1px solid var(--bd);text-align:left}
+@media(max-width:760px){main{grid-template-columns:1fr;padding:8px}.cam{position:static;width:auto;max-height:none;box-shadow:none}#drag{cursor:default}#drag button{display:none}.view{aspect-ratio:4/5}
+.grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}.item{min-width:140px;width:140px;scroll-snap-align:start}}
+</style></head><body>
+<header><div><b>FITTING AI LIVE</b><small>COBA DULU, BARU BELI.</small></div>
+<button id="qb" class="pill" onclick="premium.showModal()"></button></header>
+<main>
+<section class="cam">
+<h2 id="drag">Try-On · FITTING AI LIVE <button title="Kecilkan/besarkan" onclick="this.closest('.cam').classList.toggle('min')">—</button></h2>
+<div class="view" id="view">
+ <span class="tag" id="tag">KAMERA MATI</span>
+ <video id="v" class="mir" playsinline muted hidden></video>
+ <img id="shot" alt="Foto pengguna" hidden><canvas id="ar"></canvas>
+ <svg class="sil" id="sil" viewBox="0 0 100 133"><path d="M50 14c-8 0-13 7-13 15 0 6 3 11 7 13-12 3-22 10-22 24v67h56V66c0-14-10-21-22-24 4-2 7-7 7-13 0-8-5-15-13-15z" fill="none" stroke="#fff" stroke-width="1.2" stroke-dasharray="3 2"/><text x="50" y="120" fill="#fff" font-size="5" text-anchor="middle">Mundur sedikit — pastikan tubuh atas terlihat</text></svg>
+ <div class="msg" id="msg">Tekan <b>Mulai Kamera</b>. Kamera hanya aktif setelah kamu setuju; video tidak dikirim ke mana pun.</div>
+</div>
+<div class="bar">
+ <button class="p" id="bStart" onclick="startCamera()">Mulai Kamera</button>
+ <button id="bStop" onclick="stopCamera()" disabled>Stop</button>
+ <button id="bSw" onclick="switchCamera()" disabled>Ganti Kamera</button>
+ <button id="bShot" onclick="captureUserPhoto()" disabled>Ambil Foto</button><button id="bAR" onclick="setAR(!AR.on)" disabled>AR DEMO</button>
+ <label><button onclick="this.nextElementSibling.click()">Upload Foto</button><input type="file" accept="image/jpeg,image/png,image/webp" hidden onchange="uploadPhoto(this)"></label>
+ <button onclick="resetTryOnSession()">Reset</button>
+</div>
+<div class="bar" style="padding-top:0"><button class="p" id="bGo" onclick="requestVirtualTryOn()" style="flex:1">Coba Pakaian Ini</button></div>
+<div class="res" id="res"><figure><img id="orig" alt="Foto asli">Foto asli</figure><figure id="out">Hasil</figure></div>
+<div class="note" id="status"><b>MODE DEMO AKTIF</b> — Kamera dan katalog berfungsi. Layanan AI virtual try-on belum terhubung.</div>
+<div class="quota"><span id="qt"></span><span>Kuota simulasi (demo)</span></div>
+</section>
+
+<section>
+<div class="tools"><input id="q" placeholder="Cari pakaian…" oninput="render()"><select id="cat" onchange="render()"></select></div>
+<div class="detail" id="detail" style="margin:0 0 12px"></div>
+<div class="grid" id="grid"></div>
+</section>
+</main>
+
+<dialog id="askCam" style="text-align:center">
+<h2 style="margin-top:0">Nyalakan kamera sekarang?</h2>
+<p>Kamu bisa mencoba pakaian lewat kamera. Video hanya tampil di perangkatmu dan tidak dikirim ke mana pun. Browser akan meminta izin kamera.</p>
+<div style="display:flex;gap:10px;justify-content:center"><button class="p" style="min-width:110px" onclick="answerCam(true)">Yes</button><button style="min-width:110px" onclick="answerCam(false)">No</button></div>
+</dialog>
+
+<dialog id="premium">
+<h2 style="margin-top:0">TINGKATKAN PENGALAMAN VIRTUAL FITTING KAMU</h2>
+<p>Nikmati pengalaman mencoba berbagai outfit dengan kuota yang lebih besar.</p>
+<table><tr><th></th><th>FREE</th><th>PREMIUM</th></tr>
+<tr><td>Kuota try-on</td><td id="pf"></td><td id="pp"></td></tr>
+<tr><td>Kamera &amp; katalog</td><td>Ya</td><td>Ya</td></tr>
+<tr><td>Harga</td><td>Gratis</td><td id="pr"></td></tr>
+<tr><td>Status</td><td>Aktif</td><td>Belum tersedia</td></tr></table>
+<p class="note" style="margin:10px 0">Pembayaran belum aktif. Tidak ada saldo dipotong dan tidak ada data kartu diminta.</p>
+<button class="p" onclick="alert('Premium belum dibuka. Fase pembayaran akan dikembangkan berikutnya.')">Upgrade</button>
+<button onclick="premium.close()">Tutup</button>
+</dialog>
+
+<script>
+// ===== Konfigurasi (ubah di sini, bukan di dalam logika) =====
+const CONFIG={freeQuota:3,premiumQuota:100,premiumPrice:"Rp (diatur nanti)",storeKey:"fal_demo_quota_v1",aiProvider:null}; // aiProvider: adapter nyata nanti
+// ===== Katalog DEMO =====
+const P=[
+["Kaos Basic Putih","Kaos","tee",["#f5f5f5","#18181b","#2563eb"],["S","M","L","XL"],89000],
+["Kemeja Oxford Biru","Kemeja","shirt",["#93c5fd","#f5f5f5"],["M","L","XL"],179000],
+["Hoodie Oversize Hitam","Hoodie","hoodie",["#18181b","#78716c"],["M","L","XL"],249000],
+["Jaket Bomber Hijau","Jaket","jacket",["#3f6212","#18181b"],["M","L"],299000],
+["Sweater Rajut Coklat","Sweater","sweater",["#a16207","#be123c"],["S","M","L"],199000],
+["Celana Chino Krem","Celana","pants",["#d6c8a8","#27272a"],["28","30","32","34"],189000],
+["Kaos Streetwear Graphic","Streetwear","tee",["#ea580c","#18181b"],["M","L","XL"],129000],
+["Outfit Wanita Blouse Pink","Outfit wanita","shirt",["#f9a8d4","#f5f5f5"],["S","M","L"],159000]
+].map((a,i)=>({product_id:"DEMO-"+(i+1),product_name:a[0],category:a[1],type:a[2],available_colors:a[3],available_sizes:a[4],price:a[5],
+ product_description:"Contoh produk DEMO. Gambar referensi AI dan foto katalog terpisah di versi produksi.",shopee_url:"",tiktok_shop_url:"",try_on_supported:true,
+ garment_reference_image:null,product_image:null}));
+function garmentSVG(p,color){const sl={tee:"M22 28l-14 14 9 8 8-6v44h54V44l8 6 9-8-14-14-14-5c-3 8-10 11-22 11s-19-3-22-11z",
+ shirt:"M22 28l-16 46 10 4 8-22v50h52V56l8 22 10-4-16-46-14-5-14 12-14-12z",hoodie:"M20 30l-14 50 12 4 8-26v50h48V58l8 26 12-4-14-50-16-6c0 14-8 18-20 18s-20-4-20-18z",
+ jacket:"M22 28l-16 50 12 4 8-24v50h52V58l8 24 12-4-16-50-14-6-12 10v62h0V32l-12-10z",sweater:"M22 28l-16 52 12 4 8-26v50h52V58l8 26 12-4-16-52-14-6c0 8-8 12-16 12s-16-4-16-12z",
+ pants:"M30 12h40l6 78H56L50 40l-6 50H24z"}[p.type];
+ return `<svg viewBox="0 0 100 100"><path d="${sl}" fill="${color}" stroke="#0004" stroke-width="1"/></svg>`}
+// ===== State =====
+const S={img:{},stream:null,facing:"user",devices:[],sel:P[0],color:null,size:null,photo:null,busy:false,reqSeq:0,ctrl:null,used:0};
+const $=id=>document.getElementById(id);
+function loadQuota(){try{S.used=Math.min(CONFIG.freeQuota,+localStorage.getItem(CONFIG.storeKey)||0)}catch(e){S.used=0}}
+function saveQuota(){try{localStorage.setItem(CONFIG.storeKey,S.used)}catch(e){}}
+function checkRemainingQuota(){return CONFIG.freeQuota-S.used}
+function paintQuota(){const r=checkRemainingQuota();$("qt").textContent=r>0?`${r} dari ${CONFIG.freeQuota} percobaan ${r===CONFIG.freeQuota?"tersedia":"tersisa"}`:"Kuota gratis kamu telah habis.";
+ $("qb").textContent=r>0?`PERCOBAAN GRATIS · ${r}/${CONFIG.freeQuota}`:"KUOTA HABIS · Premium";$("bGo").disabled=S.busy||r<=0&&false}
+// ===== Kamera =====
+function showMsg(t){$("msg").innerHTML=t;$("msg").hidden=!t}
+async function startCamera(){
+ if(!navigator.mediaDevices?.getUserMedia){showMsg("Browser tidak mendukung kamera. Gunakan <b>Upload Foto</b>.");return}
+ try{stopCamera(true);
+  S.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:S.facing,width:{ideal:960},height:{ideal:1280}},audio:false});
+  const v=$("v");v.srcObject=S.stream;v.hidden=false;await v.play();$("shot").hidden=true;showMsg("");
+  const t=S.stream.getVideoTracks()[0].getSettings();v.classList.toggle("mir",t.facingMode!=="environment"&&S.facing==="user");
+  $("sil").classList.add("on");$("tag").textContent="● KAMERA AKTIF";
+  ["bStop","bSw","bShot","bAR"].forEach(i=>$(i).disabled=false);$("bStart").disabled=true;
+  S.devices=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==="videoinput");$("bSw").disabled=S.devices.length<2;
+ }catch(e){const m={NotAllowedError:"Izin kamera ditolak. Aktifkan izin kamera di pengaturan browser, atau pakai Upload Foto.",
+  NotFoundError:"Perangkat tidak punya kamera. Gunakan Upload Foto.",NotReadableError:"Kamera sedang dipakai aplikasi lain. Tutup aplikasi itu lalu coba lagi.",
+  SecurityError:"Kamera butuh HTTPS."}[e.name]||"Kamera gagal dibuka ("+e.name+").";showMsg(m);$("tag").textContent="KAMERA MATI"}}
+function stopCamera(silent){setAR(false);S.stream?.getTracks().forEach(t=>t.stop());S.stream=null;const v=$("v");v.srcObject=null;v.hidden=true;$("sil").classList.remove("on");
+ if(!silent){$("tag").textContent="KAMERA MATI";["bStop","bSw","bShot","bAR"].forEach(i=>$(i).disabled=true);$("bStart").disabled=false;if(!S.photo)showMsg("Kamera dihentikan.")}}
+function switchCamera(){S.facing=S.facing==="user"?"environment":"user";startCamera()}
+addEventListener("pagehide",()=>stopCamera(true));
+// ===== Foto =====
+function setPhoto(url){S.photo=url;$("shot").src=url;$("shot").hidden=false;$("orig").src=url;showMsg("");if(!S.stream)$("tag").textContent="FOTO";clearResult()}
+function captureUserPhoto(){const v=$("v");if(!v.videoWidth)return;const c=document.createElement("canvas");c.width=v.videoWidth;c.height=v.videoHeight;
+ const x=c.getContext("2d");if(v.classList.contains("mir")){x.translate(c.width,0);x.scale(-1,1)}x.drawImage(v,0,0);setPhoto(c.toDataURL("image/jpeg",.9))}
+function uploadPhoto(i){const f=i.files[0];if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){alert("Format harus JPG, PNG, atau WebP.");return}
+ if(f.size>8e6){alert("Ukuran maksimal 8 MB.");return}const r=new FileReader();r.onload=()=>setPhoto(r.result);r.readAsDataURL(f);i.value=""}
+function resetTryOnSession(){S.reqSeq++;S.ctrl?.abort();S.busy=false;S.photo=null;$("shot").hidden=true;clearResult();paintQuota();if(!S.stream)showMsg("Sesi di-reset. Mulai kamera atau upload foto.")}
+function clearResult(){$("res").classList.toggle("on",!!S.photo&&false);$("out").textContent="Hasil"}
+// ===== Katalog =====
+function render(){const q=$("q").value.toLowerCase(),c=$("cat").value;
+ $("grid").innerHTML=P.filter(p=>(!q||p.product_name.toLowerCase().includes(q))&&(!c||p.category===c)).map(p=>
+ `<button class="item ${p.product_id===S.sel.product_id?"sel":""}" onclick="selectGarment('${p.product_id}')">${thumb(p)}<b>${p.product_name}</b><span>Rp ${p.price.toLocaleString("id-ID")}</span> <span class="demo">DEMO</span></button>`).join("")||"<p>Tidak ada produk.</p>";
+ const p=S.sel;S.color=S.color&&p.available_colors.includes(S.color)?S.color:p.available_colors[0];S.size=p.available_sizes.includes(S.size)?S.size:null;
+ $("detail").innerHTML=`<div style="display:flex;gap:14px;flex-wrap:wrap"><div style="width:150px">${thumb(p,S.color)}</div><div style="flex:1;min-width:220px"><h3>${p.product_name} <span class="demo">DEMO</span></h3><div>${p.category} · Rp ${p.price.toLocaleString("id-ID")}</div><p>${p.product_description}</p>
+ <div class="row">${p.available_colors.map(c=>`<button class="sw ${c===S.color?"sel":""}" style="background:${c}" aria-label="Warna ${c}" onclick="S.color='${c}';render()"></button>`).join("")}</div>
+ <div class="row">${p.available_sizes.map(s=>`<button class="sz ${s===S.size?"sel":""}" onclick="S.size='${s}';render()">${s}</button>`).join("")}</div>
+ <div class="row"><button class="p" ${link(p,'shopee')?'':'disabled'} onclick="buy('shopee')">BELI DI SHOPEE</button><button class="p" ${link(p,'tiktok')?'':'disabled'} onclick="buy('tiktok')">BELI DI TIKTOK SHOP</button><button onclick="scrollTo({top:0,behavior:'smooth'})">KEMBALI KE FITTING ROOM</button></div>
+ <details><summary>Hubungkan produk asli (seller)</summary>
+ <input style="width:100%;margin:6px 0;padding:8px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)" placeholder="Link produk Shopee (https://shopee.co.id/...)" value="${link(p,'shopee').replace(/"/g,'&quot;')}" onchange="setLink('${p.product_id}','shopee',this.value)">
+ <input style="width:100%;margin:6px 0;padding:8px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)" placeholder="Link produk TikTok Shop (https://www.tiktok.com/...)" value="${link(p,'tiktok').replace(/"/g,'&quot;')}" onchange="setLink('${p.product_id}','tiktok',this.value)">
+ <label>Foto pakaian (PNG transparan) untuk AR: <input type="file" accept="image/png,image/webp,image/jpeg" onchange="setGarmentImg('${p.product_id}',this)"></label></details>
+ <small style="color:var(--mu)">Tombol beli aktif setelah link asli diisi. Link disimpan di perangkat ini; foto pakaian hanya selama halaman terbuka.</small></div></div>`}
+const LK='fal_links_v1';let LINKS={};try{LINKS=JSON.parse(localStorage.getItem(LK))||{}}catch(e){}
+const OK={shopee:/^(.+\.)?(shopee\.(co\.id|com)|shp\.ee|shope\.ee)$/i,tiktok:/^(.+\.)?tiktok\.com$/i};
+function link(p,k){return (LINKS[p.product_id]||{})[k]||p[k==='shopee'?'shopee_url':'tiktok_shop_url']||''}
+function setLink(id,k,v){v=v.trim();let ok=!v;if(v)try{const u=new URL(v);ok=u.protocol==='https:'&&OK[k].test(u.hostname)}catch(e){}
+ if(!ok){alert('Link tidak valid. Gunakan link https resmi '+(k==='shopee'?'Shopee':'TikTok Shop')+'.');return render()}
+ (LINKS[id]=LINKS[id]||{})[k]=v;try{localStorage.setItem(LK,JSON.stringify(LINKS))}catch(e){}render()}
+function buy(k){const u=link(S.sel,k);if(u)window.open(u,'_blank','noopener')}
+function thumb(p,c){const u=S.img[p.product_id];return u?`<img src="${u}" alt="${p.product_name}" style="width:100%;aspect-ratio:1;object-fit:contain;border-radius:8px;background:var(--bg)">`:garmentSVG(p,c||p.available_colors[0])}
+function setGarmentImg(id,i){const f=i.files[0];if(!f)return;if(!/^image\/(png|webp|jpeg)$/.test(f.type)||f.size>4e6){alert('PNG/WebP/JPG, maksimal 4 MB.');return}const r=new FileReader();r.onload=()=>{S.img[id]=r.result;render()};r.readAsDataURL(f);i.value=''}
+function selectGarment(id){S.sel=P.find(p=>p.product_id===id);S.color=null;S.reqSeq++;S.ctrl?.abort();S.busy=false;$("bGo").disabled=false; // kamera tidak disentuh
+ $("out").textContent="Hasil";render()}
+// ===== Try-on (adapter) =====
+async function requestVirtualTryOn(){
+ if(S.busy)return;
+ if(!S.photo){if(S.stream)captureUserPhoto();else{alert("Mulai kamera atau upload foto dulu.");return}}
+ if(checkRemainingQuota()<=0){$("status").innerHTML="<b>Kuota gratis kamu telah habis.</b> Kamera dan katalog tetap bisa dipakai.";premium.showModal();return}
+ if(CONFIG.aiProvider&&!S.consent){if(!confirm('Foto kamu akan dikirim ke server dan layanan AI (fal.ai) untuk diproses, dan tidak disimpan oleh aplikasi ini. Lanjutkan?'))return;S.consent=true}
+ const id=++S.reqSeq,reqKey=crypto.randomUUID?.()||String(Date.now()),garment=S.sel,color=S.color;S.busy=true;S.ctrl=new AbortController();$("bGo").disabled=true;
+ $("res").classList.add("on");$("out").textContent="Memproses…";$("status").textContent="Mengirim permintaan try-on…";
+ if(!CONFIG.aiProvider){S.used++;saveQuota();paintQuota();} // mode demo: kuota simulasi; mode server: server yang menentukan
+ try{
+  if(!CONFIG.aiProvider)throw {code:"NOT_CONFIGURED"};
+  const r=await CONFIG.aiProvider.tryOn({photo:S.photo,garment,color,reqKey,signal:S.ctrl.signal});
+  if(id!==S.reqSeq)return; // hasil lama dibuang
+  if(r.remaining!=null){S.used=CONFIG.freeQuota-r.remaining;paintQuota()}
+  $("out").innerHTML=`<img src="${r.imageUrl}" alt="Hasil AI">`;$("status").innerHTML="<b>PHOTO TRY-ON</b> — hasil AI untuk "+garment.product_name;
+ }catch(e){if(id!==S.reqSeq)return;if(e.code==='QUOTA'){S.used=CONFIG.freeQuota;paintQuota();premium.showModal()}
+  $("out").innerHTML=garmentSVG(garment,color)+"<div>Referensi pakaian (bukan hasil AI)</div>";
+  $("status").innerHTML=e.code==="NOT_CONFIGURED"?"<b>MODE DEMO AKTIF</b> — Kamera dan katalog berfungsi. Layanan AI virtual try-on belum terhubung, jadi tidak ada hasil AI yang ditampilkan.":"Pemrosesan AI gagal. Coba lagi."}
+ finally{if(id===S.reqSeq){S.busy=false;$("bGo").disabled=false}}}
+// ===== Init =====
+$("cat").innerHTML='<option value="">Semua kategori</option>'+[...new Set(P.map(p=>p.category))].map(c=>`<option>${c}</option>`).join("");
+$("pf").textContent=CONFIG.freeQuota;$("pp").textContent=CONFIG.premiumQuota;$("pr").textContent=CONFIG.premiumPrice;
+loadQuota();paintQuota();render();
+function shrink(u,max=1024){return new Promise((ok,no)=>{const i=new Image();i.onload=()=>{const r=Math.min(1,max/Math.max(i.naturalWidth,i.naturalHeight)),c=document.createElement('canvas');c.width=i.naturalWidth*r;c.height=i.naturalHeight*r;c.getContext('2d').drawImage(i,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.9))};i.onerror=no;i.src=u})}
+async function garmentPng(p,color){const u=S.img[p.product_id]||('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(garmentSVG(p,color).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="768" height="768" ')));
+ const i=new Image();i.src=u;await i.decode();const c=document.createElement('canvas');c.width=c.height=768;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,768,768);const r=Math.min(768/i.naturalWidth,768/i.naturalHeight);x.drawImage(i,(768-i.naturalWidth*r)/2,(768-i.naturalHeight*r)/2,i.naturalWidth*r,i.naturalHeight*r);return c.toDataURL('image/png')}
+const aiProvider={async tryOn({photo,garment,color,reqKey,signal}){
+ const r=await fetch('/api/tryon',{method:'POST',headers:{'Content-Type':'application/json'},signal,body:JSON.stringify({requestId:reqKey,consent:true,person:await shrink(photo),garment:await garmentPng(garment,color)})});
+ const d=await r.json().catch(()=>({}));if(!r.ok)throw {code:d.code||'FAILED'};return d}};
+(async()=>{try{const c=await(await fetch('/api/config')).json();if(c.aiConfigured){CONFIG.aiProvider=aiProvider;CONFIG.freeQuota=c.limit;S.used=c.limit-c.remaining;paintQuota();$('qt').nextElementSibling.textContent='Kuota server';
+ $('status').innerHTML='<b>PHOTO TRY-ON</b> aktif — foto diproses AI sungguhan lewat server. Mode live video AI belum tersedia (AR DEMO hanya overlay).'}}catch(e){}})();
+function answerCam(yes){$('askCam').close();if(yes)startCamera();else showMsg('Kamera belum dinyalakan. Tekan <b>Mulai Kamera</b> kapan saja, atau pakai Upload Foto.')}
+$('bStart').addEventListener('click',()=>{if($('askCam').open)$('askCam').close()});
+$('askCam').showModal();
+// ===== AR DEMO: overlay mengikuti tubuh (bukan AI generatif) =====
+const AR={on:false,raf:0,sm:null,t:-1,imgs:{},pose:null};
+function arImg(p,col){const u=S.img[p.product_id],k=u?p.product_id+u.length:p.type+col;if(!AR.imgs[k]){const i=new Image();i.src=u||'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(garmentSVG(p,col).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" '));AR.imgs[k]=i}return AR.imgs[k]}
+async function setAR(on){
+ if(!on){AR.on=false;cancelAnimationFrame(AR.raf);const c=$('ar');c.getContext('2d').clearRect(0,0,c.width,c.height);$('bAR').textContent='AR DEMO';AR.sm=null;return}
+ if(!S.stream)return;$('bAR').disabled=true;$('bAR').textContent='Memuat model…';
+ try{
+  if(!AR.pose){const B='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/';const m=await import(B+'vision_bundle.mjs');const f=await m.FilesetResolver.forVisionTasks(B+'wasm');
+   AR.pose=await m.PoseLandmarker.createFromOptions(f,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task'},runningMode:'VIDEO',numPoses:1})}
+  AR.on=true;$('sil').classList.remove('on');$('bAR').textContent='Matikan AR';
+  $('status').innerHTML='<b>AR DEMO</b> — pakaian ditempel mengikuti tubuh (overlay pelacakan), bukan hasil AI generatif. Bentuk dan lipatan belum realistis.';arLoop();
+ }catch(e){$('status').textContent='AR DEMO gagal dimuat (butuh internet dan halaman di luar claude.ai).';$('bAR').textContent='AR DEMO'}
+ $('bAR').disabled=false}
+function arLoop(){if(!AR.on)return;const v=$('v'),c=$('ar');
+ if(v.videoWidth&&v.currentTime!==AR.t){AR.t=v.currentTime;if(c.width!==v.videoWidth){c.width=v.videoWidth;c.height=v.videoHeight}
+  c.classList.toggle('mir',v.classList.contains('mir'));
+  const L=AR.pose.detectForVideo(v,performance.now()).landmarks[0],x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);
+  if(L){const W=c.width,H=c.height,g=i=>({x:L[i].x*W,y:L[i].y*H}),ls=g(11),rs=g(12),lh=g(23),rh=g(24),la=g(27),ra=g(28);
+   const raw=[(ls.x+rs.x)/2,(ls.y+rs.y)/2,(lh.x+rh.x)/2,(lh.y+rh.y)/2,Math.hypot(ls.x-rs.x,ls.y-rs.y),Math.atan2(ls.y-rs.y,ls.x-rs.x),(la.y+ra.y)/2,Math.hypot(lh.x-rh.x,lh.y-rh.y)];
+   AR.sm=AR.sm?AR.sm.map((a,i)=>a+(raw[i]-a)*.5):raw;const [sx,sy,hx,hy,sw,ang,ay,hw]=AR.sm,p=S.sel,img=arImg(p,S.color||p.available_colors[0]),cu=!!S.img[p.product_id];
+   if(img.complete&&sw>20){x.save();x.globalAlpha=.93;
+    if(cu&&p.type==='pants'){const w=hw*2.2,h=w*img.naturalHeight/img.naturalWidth;x.drawImage(img,hx-w/2,hy-.05*h,w,h)}else if(cu){const w=sw*1.9,h=w*img.naturalHeight/img.naturalWidth;x.translate(sx,sy);x.rotate(ang);x.drawImage(img,-w/2,-.1*h,w,h)}else if(p.type==='pants'){const h=Math.max(40,ay-hy)/.78,w=hw*2.9;x.drawImage(img,hx-w/2,hy-.12*h,w,h)}
+    else{const tl=Math.hypot(hx-sx,hy-sy),h=Math.min(tl/.62,sw*2.4),w=sw*2.1;x.translate(sx,sy);x.rotate(ang);x.drawImage(img,-w/2,-.24*h,w,h)}
+    x.restore()}}}
+ AR.raf=requestAnimationFrame(arLoop)}
+
+// Jendela try-on melayang yang bisa digeser (desktop/tablet)
+(()=>{const c=document.querySelector('.cam'),h=$('drag');let d=null;
+ h.addEventListener('pointerdown',e=>{if(innerWidth<=760||e.target.closest('button'))return;const r=c.getBoundingClientRect();d={x:e.clientX-r.left,y:e.clientY-r.top};h.setPointerCapture(e.pointerId)});
+ h.addEventListener('pointermove',e=>{if(!d)return;const x=Math.min(Math.max(0,e.clientX-d.x),innerWidth-c.offsetWidth),y=Math.min(Math.max(0,e.clientY-d.y),innerHeight-60);c.style.left=x+'px';c.style.top=y+'px';c.style.right='auto'});
+ h.addEventListener('pointerup',()=>{d=null});
+ addEventListener('resize',()=>{if(innerWidth<=760){c.style.left=c.style.top=c.style.right=''}});})();
+</script></body></html>
